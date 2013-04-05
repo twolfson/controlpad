@@ -1,1 +1,14 @@
-echo 1
+# Get info from linux displays
+# http://www.cyberciti.biz/faq/how-do-i-find-out-screen-resolution-of-my-linux-desktop/
+# xrandr | grep '*'
+
+# Get nth column
+# http://stackoverflow.com/questions/7315587/bash-shortest-way-to-get-n-th-column-of-output
+# cut -f2
+# DEV: Need to do `-d " "` for spaces o_O
+
+# Calculate desktop sizings
+xrandr | grep ' connected ' | cut --fields=3 --delimiter " "
+# for display in `xrandr | grep ' connected '`; do
+#   echo $display
+# done

@@ -49,6 +49,7 @@ docclean:
 	rm -f man/*.html
 
 dev:
-	nodemon -x "sudo make install"
+	sudo make install
+	controlpad
 
 .PHONY: docs clean docclean install uninstall dev
