@@ -7,8 +7,20 @@
 # cut -f2
 # DEV: Need to do `-d " "` for spaces o_O
 
-# Calculate desktop sizings
-xrandr | grep ' connected ' | cut --fields=3 --delimiter " "
+# Grab desktop sizings/offsets
+DESKTOPS=$(xrandr | grep ' connected ' | cut --fields=3 --delimiter ' ')
+for DESKTOP in $DESKTOPS; do
+  DIMENSIONS=$(echo $DESKTOP | tr x ' ' | tr + ' ')
+  WIDTH=$( echo $DIMENSIONS | cut --fields=1 --delimiter ' ')
+  HEIGHT=$(echo $DIMENSIONS | cut --fields=2 --delimiter ' ')
+  LEFT=$(  echo $DIMENSIONS | cut --fields=3 --delimiter ' ')
+  TOP=$(   echo $DIMENSIONS | cut --fields=4 --delimiter ' ')
+  echo $WIDTH
+  echo $HEIGHT
+  echo $LEFT
+  echo $TOP
+done
+
 # for display in `xrandr | grep ' connected '`; do
 #   echo $display
 # done
