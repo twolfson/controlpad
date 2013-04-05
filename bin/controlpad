@@ -1,1 +1,14 @@
-echo "3"
+# DEV: We are building a state machine
+
+# I work on an extended side by side desktop (totalling 3840x1080)
+# When I push ctrl+alt+host+right
+  # If the focused window is on the right half of the first monitor
+    # Move it to the left half of the second monitor
+  # If it is on the second monitor
+    # Move it to the right half of the second monitor
+  # Otherwise
+    # Move it to the right half of the first monitor
+
+# TODO: Determine how to get window state
+
+# If we anticipate chaining (very likely), we need to figure out how to build a persistent action stack (e.g. pushd/popd)
