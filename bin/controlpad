@@ -1,3 +1,4 @@
+#!/bin/bash
 # Get info from linux displays
 # http://www.cyberciti.biz/faq/how-do-i-find-out-screen-resolution-of-my-linux-desktop/
 # xrandr | grep '*'
@@ -8,19 +9,26 @@
 # DEV: Need to do `-d " "` for spaces o_O
 
 # Grab desktop sizings/offsets
-DESKTOPS=$(xrandr | grep ' connected ' | cut --fields=3 --delimiter ' ')
-for DESKTOP in $DESKTOPS; do
-  DIMENSIONS=$(echo $DESKTOP | tr x ' ' | tr + ' ')
-  WIDTH=$( echo $DIMENSIONS | cut --fields=1 --delimiter ' ')
-  HEIGHT=$(echo $DIMENSIONS | cut --fields=2 --delimiter ' ')
-  LEFT=$(  echo $DIMENSIONS | cut --fields=3 --delimiter ' ')
-  TOP=$(   echo $DIMENSIONS | cut --fields=4 --delimiter ' ')
-  echo $WIDTH
-  echo $HEIGHT
-  echo $LEFT
-  echo $TOP
+DESKTOPS_STR=$(xrandr | grep ' connected ' | cut --fields=3 --delimiter ' ')
+
+# Coerce DESKTOP string into array
+DESKTOPS=()
+for DESKTOP in $DESKTOPS_STR; do
+  # Normalize dimensions for iteration
+  DIMENSIONS_STR=$(echo $DESKTOP | tr x ' ' | tr + ' ')
+  # WIDTH=$( echo $DIMENSIONS | cut --fields=1 --delimiter ' ')
+  # HEIGHT=$(echo $DIMENSIONS | cut --fields=2 --delimiter ' ')
+  # LEFT=$(  echo $DIMENSIONS | cut --fields=3 --delimiter ' ')
+  # TOP=$(   echo $DIMENSIONS | cut --fields=4 --delimiter ' ')
+
+  # Convert dimensions to array
+  DIMENSIONS=()
+  for DIMENSION in $DIMENSIONS_STR; do
+    DIMENSIONS[${#DIMENSIONS[@]}]=$DIMENSION
+  done
+
+  # Save the DIMENSIONS
+  DESKTOPS[${#DESKTOPS[@]}]=$DIMENSIONS
 done
 
-# for display in `xrandr | grep ' connected '`; do
-#   echo $display
-# done
+echo ${DESKTOPS[1][2]}
