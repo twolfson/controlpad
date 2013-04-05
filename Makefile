@@ -37,11 +37,10 @@ uninstall:
 		echo "... uninstalling $(DESTDIR)$(PREFIX)/$(BIN)"; \
 		rm -f $(DESTDIR)$(PREFIX)/$(BIN); \
 	)
-	@$(foreach MAN, $(MAN_PAGES), \
-		echo "... uninstalling $(DESTDIR)$(MANPREFIX)/$(MAN)"; \
-		rm -f $(DESTDIR)$(MANPREFIX)/$(MAN); \
-	)
-	rm -f $(DESTDIR)/etc/bash_completion.d/git-extras
+	# @$(foreach MAN, $(MAN_PAGES), \
+	# 	echo "... uninstalling $(DESTDIR)$(MANPREFIX)/$(MAN)"; \
+	# 	rm -f $(DESTDIR)$(MANPREFIX)/$(MAN); \
+	# )
 
 clean: docclean
 
@@ -49,4 +48,7 @@ docclean:
 	rm -f man/*.1
 	rm -f man/*.html
 
-.PHONY: docs clean docclean install uninstall
+dev:
+	nodemon -x "sudo make install"
+
+.PHONY: docs clean docclean install uninstall dev
