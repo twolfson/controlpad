@@ -29,10 +29,23 @@ var desktopsStr = exec("xrandr | grep ' connected ' | cut --fields=3 --delimiter
       };
     });
 
+function grep(content, pattern) {
+  var lines = content.split(/\n/g),
+      matchedLines = lines.filter(function (line) {
+        return line.match(pattern);
+      }) || [];
+  return matchedLines[0];
+}
+
 // TODO: Get current window and its position
+// Get active window and window info
+// http://unix.stackexchange.com/questions/61037/how-to-resize-application-windows-in-an-arbitrary-direction-not-vertical-and-no
 var windowId = exec("xprop -display ':0' -root | grep ^_NET_ACTIVE_WINDOW | cut --delimiter ' ' --fields 5"),
-    windowInfo = exec("xwininfo -id " + windowId);
+    windowInfo = exec("xwininfo -id " + windowId),
+    // windowWidth = grep(windowInfo, 'Width');
+    windowWidth = exec("echo " + windowInfo.slice(0));
 console.log(windowId, windowInfo);
+console.log(windowWidth);
 
 
 // TODO: Calculate the rightmost/leftmost/topmost/bottommost
