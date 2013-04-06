@@ -11,10 +11,34 @@
 // DEV: Need to do `-d " "` for spaces o_O
 
 // Load in execSync
-var execSync = require('execSync');
+var execSync = require('execSync'),
+    exec = execSync.stdout;
 
 // Grab desktop sizings/offsets
 // DESKTOPS_STR=$(xrandr | grep ' connected ' | cut --fields=3 --delimiter ' ')
-var desktopsStr = execSync.stdout("xrandr | grep ' connected ' | cut --fields=3 --delimiter ' '")
+var desktopsStr = exec("xrandr | grep ' connected ' | cut --fields=3 --delimiter ' '").trim(),
+    desktopsArr = desktopsStr.split(/\n/g),
+    desktops = desktopsArr.map(function interpretDesktop (desktopStr) {
+      // DEV: This is a bash-like implementation -- normally, we would use .match(/.../g), or `extract-values` module
+      var desktopDimensions = desktopStr.replace(/x/g, ' ').replace(/\+/g, ' ').split(' ');
+      return {
+        width: desktopDimensions[0],
+        height: desktopDimensions[1],
+        left: desktopDimensions[2],
+        top: desktopDimensions[3]
+      };
+    });
 
-console.log(desktopsStr)
+// TODO: Get current window and its position
+var windowId = exec("xprop -display ':0' -root | grep ^_NET_ACTIVE_WINDOW | cut --delimiter ' ' --fields 5"),
+    windowInfo = exec("xwininfo -id " + windowId);
+console.log(windowId, windowInfo);
+
+
+// TODO: Calculate the rightmost/leftmost/topmost/bottommost
+
+// TODO: Calculate relative desktops (left, right, top, bottom)
+
+// TODO: Calculate current
+
+// TODO: Get current state stack
