@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/node
 # Get info from linux displays
 # http://www.cyberciti.biz/faq/how-do-i-find-out-screen-resolution-of-my-linux-desktop/
 # xrandr | grep '*'
