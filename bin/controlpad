@@ -32,7 +32,10 @@ var desktopsStr = exec("xrandr | grep ' connected ' | cut --fields=3 --delimiter
     });
 
 // TODO: Step 1 -- Get it working
-// TODO: Resize active window to right half of rightmost desktop
+// TODO: Resize active window to right half of first desktop
+var firstDesktop = desktops[0];
+// gravity, left, top, width, height
+exec("wmctrl -r :ACTIVE: -e 0," + (firstDesktop.left + firstDesktop.width / 2) + "," + firstDesktop.top + "," + (firstDesktop.width / 2) + "," + firstDesktop.height)
 
 // // DEV: Temporary stand in
 // function grep(content, pattern) {
