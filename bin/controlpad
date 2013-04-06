@@ -1,34 +1,20 @@
-#!/bin/node
-# Get info from linux displays
-# http://www.cyberciti.biz/faq/how-do-i-find-out-screen-resolution-of-my-linux-desktop/
-# xrandr | grep '*'
+#!/usr/bin/env node
+// DEV: I am building this as close to bash as possiblesince it should eventually be pure bash
 
-# Get nth column
-# http://stackoverflow.com/questions/7315587/bash-shortest-way-to-get-n-th-column-of-output
-# cut -f2
-# DEV: Need to do `-d " "` for spaces o_O
+// Get info from linux displays
+// http://www.cyberciti.biz/faq/how-do-i-find-out-screen-resolution-of-my-linux-desktop/
+// xrandr | grep '*'
 
-# Grab desktop sizings/offsets
-DESKTOPS_STR=$(xrandr | grep ' connected ' | cut --fields=3 --delimiter ' ')
+// Get nth column
+// http://stackoverflow.com/questions/7315587/bash-shortest-way-to-get-n-th-column-of-output
+// cut -f2
+// DEV: Need to do `-d " "` for spaces o_O
 
-# Coerce DESKTOP string into array
-DESKTOPS=()
-for DESKTOP in $DESKTOPS_STR; do
-  # Normalize dimensions for iteration
-  DIMENSIONS_STR=$(echo $DESKTOP | tr x ' ' | tr + ' ')
-  # WIDTH=$( echo $DIMENSIONS | cut --fields=1 --delimiter ' ')
-  # HEIGHT=$(echo $DIMENSIONS | cut --fields=2 --delimiter ' ')
-  # LEFT=$(  echo $DIMENSIONS | cut --fields=3 --delimiter ' ')
-  # TOP=$(   echo $DIMENSIONS | cut --fields=4 --delimiter ' ')
+// Load in execSync
+var execSync = require('execSync');
 
-  # Convert dimensions to array
-  DIMENSIONS=()
-  for DIMENSION in $DIMENSIONS_STR; do
-    DIMENSIONS[${#DIMENSIONS[@]}]=$DIMENSION
-  done
+// Grab desktop sizings/offsets
+// DESKTOPS_STR=$(xrandr | grep ' connected ' | cut --fields=3 --delimiter ' ')
+var desktopsStr = execSync.stdout("xrandr | grep ' connected ' | cut --fields=3 --delimiter ' '")
 
-  # Save the DIMENSIONS
-  DESKTOPS[${#DESKTOPS[@]}]=$DIMENSIONS
-done
-
-echo ${DESKTOPS[1][2]}
+console.log(desktopsStr)

@@ -24,8 +24,14 @@
   "engines": {
     "node": "*"
   },
+  "bin": {
+    "controlpad": "bin/controlpad"
+  },
+  "main": "bin/controlpad",
   "scripts": {},
-  "dependencies": {},
+  "dependencies": {
+    "execSync": "0.0.3"
+  },
   "devDependencies": {},
   "keywords": []
 }
