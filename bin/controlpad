@@ -31,32 +31,31 @@ var desktopsStr = exec("xrandr | grep ' connected ' | cut --fields=3 --delimiter
       };
     });
 
-// DEV: Temporary stand in
-function grep(content, pattern) {
-  var lines = content.split(/\n/g),
-      matchedLines = lines.filter(function (line) {
-        return line.match(pattern);
-      }) || [];
-  return matchedLines[0];
-}
+// TODO: Step 1 -- Get it working
+// TODO: Resize active window to right half of rightmost desktop
 
-// TODO: Get current window and its position
-// Get active window and window info
-// http://unix.stackexchange.com/questions/61037/how-to-resize-application-windows-in-an-arbitrary-direction-not-vertical-and-no
-var windowId = exec("xprop -display ':0' -root | grep ^_NET_ACTIVE_WINDOW | cut --delimiter ' ' --fields 5"),
-    windowWidth = exec("xwininfo -id " + windowId + " | grep Width | cut --delimiter ' ' --fields 4"),
-    windowHeight = exec("xwininfo -id " + windowId + " | grep Height | cut --delimiter ' ' --fields 4"),
-    windowLeft = exec("xwininfo -id " + windowId + " | grep 'Absolute upper-left X' | cut --delimiter ' ' --fields 7");
-    windowTop = exec("xwininfo -id " + windowId + " | grep 'Absolute upper-left Y' | cut --delimiter ' ' --fields 7");
-// console.log(windowId, windowInfo);
-// console.log(windowLeft);
-console.log(windowWidth, windowHeight, windowLeft, windowTop);
+// // DEV: Temporary stand in
+// function grep(content, pattern) {
+//   var lines = content.split(/\n/g),
+//       matchedLines = lines.filter(function (line) {
+//         return line.match(pattern);
+//       }) || [];
+//   return matchedLines[0];
+// }
 
+// // TODO: Get current window and its position
+// // Get active window and window info
+// // http://unix.stackexchange.com/questions/61037/how-to-resize-application-windows-in-an-arbitrary-direction-not-vertical-and-no
+// var windowId = exec("xprop -display ':0' -root | grep ^_NET_ACTIVE_WINDOW | cut --delimiter ' ' --fields 5"),
+//     windowWidth = exec("xwininfo -id " + windowId + " | grep Width | cut --delimiter ' ' --fields 4"),
+//     windowHeight = exec("xwininfo -id " + windowId + " | grep Height | cut --delimiter ' ' --fields 4"),
+//     windowLeft = exec("xwininfo -id " + windowId + " | grep 'Absolute upper-left X' | cut --delimiter ' ' --fields 7");
+//     windowTop = exec("xwininfo -id " + windowId + " | grep 'Absolute upper-left Y' | cut --delimiter ' ' --fields 7");
 
-// TODO: Calculate the rightmost/leftmost/topmost/bottommost
+// // TODO: Calculate the rightmost/leftmost/topmost/bottommost desktops
 
-// TODO: Calculate relative desktops (left, right, top, bottom)
+// // TODO: Calculate relative desktops (left, right, top, bottom) desktop
 
-// TODO: Calculate current
+// // TODO: Calculate current desktop
 
-// TODO: Get current state stack
+// // TODO: Get current state stack
