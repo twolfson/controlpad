@@ -50,6 +50,10 @@ var displaysStr = exec("xrandr | grep ' connected ' | cut --fields=3 --delimiter
 
 // TODO: This will become wmpush eventually
 function resizeActiveTo(dimensions) {
+  // Remove any fullscreen junk
+  exec("wmctrl -r :ACTIVE: -b remove,maximized_vert");
+  exec("wmctrl -r :ACTIVE: -b remove,maximized_horz");
+
   // gravity, left, top, width, height
   exec("wmctrl -r :ACTIVE: -e 0," + dimensions.left + "," + dimensions.top + "," + dimensions.width + "," + dimensions.height);
 }
