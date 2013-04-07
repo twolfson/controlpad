@@ -22,16 +22,15 @@ function showHelp() {
   console.log('Usage: controlpad {{display}} {{size}}');
   console.log('    display - Display to move window to');
   console.log('        - leftmost, rightmost, topmost, bottommost - Absolute displays');
-  console.log('        - left, right, top, bottom - Relative to current display');
-  console.log('        - current - Keep window on same display');
+  // console.log('        - left, right, top, bottom - Relative to current display');
+  // console.log('        - current - Keep window on same display');
   console.log('    size - Size to adjust window to');
   console.log('        - left-half, right-half, top-half, bottom-half - Half displays');
   console.log('        - top-left-quarter, top-right-quarter, bottom-left-quarter, bottom-right-quarter - Quarter displays');
   console.log('        - top-left-eighth, top-right-eighth, bottom-left-eighth, bottom-right-eighth - Eighth displays');
   console.log('        - full - Take up entire screen (not maximized)');
-  console.log('        - center - Center window in display (sized to half-by-half)');
-  console.log('        - same - Keep window on same size');
-  console.log('        - scale - Scale window size relative to display');
+  // console.log('        - center - Center window in display (sized to half-by-half)');
+  // console.log('        - scale - Scale window size relative to display');
 }
 
 // Grab display sizings/offsets
@@ -105,65 +104,106 @@ if (!display) {
 }
 
 // Create sizes based off of the display
-var semanticSizes = {
+var halfWidth = display.width / 2,
+    halfHeight = display.height / 2,
+    eighthWidth = halfWidth / 2,
+    semanticSizes = {
       'left-half': {
-        width: display.width / 2,
+        width: halfWidth,
         height: display.height,
         top: display.top,
         left: display.left
       },
       'right-half': {
-        width: display.width / 2,
+        width: halfWidth,
         height: display.height,
         top: display.top,
-        left: display.left + display.width / 2
+        left: display.left + halfWidth
       },
       'top-half': {
         width: display.width,
-        height: display.height / 2,
+        height: halfHeight,
         top: display.top,
         left: display.left
       },
       'bottom-half': {
         width: display.width,
-        height: display.height / 2,
-        top: display.top + display.height / 2,
+        height: halfHeight,
+        top: display.top + halfHeight,
         left: display.left
       },
       'top-left-quarter': {
-        width: display.width / 2,
-        height: display.height / 2,
+        width: halfWidth,
+        height: halfHeight,
         top: display.top,
         left: display.left
       },
       'top-right-quarter': {
-        width: display.width / 2,
-        height: display.height / 2,
+        width: halfWidth,
+        height: halfHeight,
         top: display.top,
-        left: display.left + display.width / 2
+        left: display.left + halfWidth
       },
       'bottom-left-quarter': {
-        width: display.width / 2,
-        height: display.height / 2,
-        top: display.top,
+        width: halfWidth,
+        height: halfHeight,
+        top: display.top + halfHeight,
         left: display.left
       },
       'bottom-right-quarter': {
-        width: display.width / 2,
-        height: display.height / 2,
-        top: display.top,
-        left: display.left + display.width / 2
+        width: halfWidth,
+        height: halfHeight,
+        top: display.top + halfHeight,
+        left: display.left + halfWidth
       },
+      'top-left-eighth': {
+        width: eighthWidth,
+        height: halfHeight,
+        top: display.top,
+        left: display.left
+      },
+      'top-right-eighth': {
+        width: eighthWidth,
+        height: halfHeight,
+        top: display.top,
+        left: display.left + halfWidth + eighthWidth
+      },
+      'bottom-left-eighth': {
+        width: eighthWidth,
+        height: halfHeight,
+        top: display.top + halfHeight,
+        left: display.left
+      },
+      'bottom-right-eighth': {
+        width: eighthWidth,
+        height: halfHeight,
+        top: display.top + halfHeight,
+        left: display.left + halfWidth + eighthWidth
+      },
+      full: {
+        width: display.width,
+        height: display.height,
+        top: display.top,
+        left: display.left
+      }
     };
 
 // Grab the requested size
-var sizeName = process.argv[3];
+var sizeName = process.argv[3],
+    size = semanticSizes[sizeName];
 
 // Assert we have a valid size
 if (!sizeName) {
   console.error('You must specify a "size"');
-  isInvalid = true;
+} else if (!size) {
+  console.error('"' + sizeName + '" is not a valid size');
 }
+
+if (!size) {
+  showHelp();
+  process.exit(1);
+}
+
 
 // // DEV: Temporary stand in
 // function grep(content, pattern) {
