@@ -51,6 +51,7 @@ var displaysStr = exec("xrandr | grep ' connected ' | cut --fields=3 --delimiter
 // TODO: This will become wmpush eventually
 function resizeActiveTo(dimensions) {
   // Remove any fullscreen junk
+  // http://movingtofreedom.org/2010/08/10/arranging-windows-from-the-gnulinux-command-line-with-wmctrl/
   exec("wmctrl -r :ACTIVE: -b remove,maximized_vert");
   exec("wmctrl -r :ACTIVE: -b remove,maximized_horz");
 
