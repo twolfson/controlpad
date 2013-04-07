@@ -24,10 +24,10 @@ var desktopsStr = exec("xrandr | grep ' connected ' | cut --fields=3 --delimiter
       // DEV: This is a bash-like implementation -- normally, we would use .match(/.../g), or `extract-values` module
       var desktopDimensions = desktopStr.replace(/x/g, ' ').replace(/\+/g, ' ').split(' ');
       return {
-        width: desktopDimensions[0],
-        height: desktopDimensions[1],
-        left: desktopDimensions[2],
-        top: desktopDimensions[3]
+        width: +desktopDimensions[0],
+        height: +desktopDimensions[1],
+        left: +desktopDimensions[2],
+        top: +desktopDimensions[3]
       };
     });
 
@@ -37,15 +37,39 @@ function resizeActiveTo(dimensions) {
   exec("wmctrl -r :ACTIVE: -e 0," + dimensions.left + "," + dimensions.top + "," + dimensions.width + "," + dimensions.height);
 }
 
-// TODO: Step 1 -- Get it working
-// TODO: Resize active window to right half of first desktop
-var firstDesktop = desktops[0];
-resizeActiveTo({
-  width: firstDesktop.width / 2,
-  height: firstDesktop.height,
-  left: firstDesktop.left + firstDesktop.width / 2,
-  top: firstDesktop.top
-});
+// DEV: Resize active window to right half of first desktop
+// var firstDesktop = desktops[0];
+// resizeActiveTo({
+//   width: firstDesktop.width / 2,
+//   height: firstDesktop.height,
+//   left: firstDesktop.left + firstDesktop.width / 2,
+//   top: firstDesktop.top
+// });
+
+// TODO: Next step -- get single commands working (not worrying about chaining stack)
+// e.g. controlpad rightmost right-half
+
+// Calculate the rightmost/leftmost/topmost/bottommost desktops
+var semanticDesktops = {
+      leftmost: desktops.reduce(function (a, b) {
+        if (a.left <= b.left) { return a; }
+        return b;
+      }),
+      rightmost: desktops.reduce(function (a, b) {
+        if (a.left >= b.left) { return a;}
+        return b;
+      }),
+      topmost: desktops.reduce(function (a, b) {
+        if (a.top <= b.top) { return a; }
+        return b;
+      }),
+      bottommost: desktops.reduce(function (a, b) {
+        if (a.top >= b.top) { return a; }
+        return b;
+      })
+      // TODO: Deal with current and relative =_=
+    };
+console.log(semanticDesktops.leftmost);
 
 // // DEV: Temporary stand in
 // function grep(content, pattern) {
@@ -56,7 +80,7 @@ resizeActiveTo({
 //   return matchedLines[0];
 // }
 
-// // TODO: Get current window and its position
+// // TODO: Get current window and its position (if not exclusively on a desktop, use the top/left corner as the de-facto -- we could use other metrics like % of window on desktop but that overcomplicates things and is not practical)
 // // Get active window and window info
 // // http://unix.stackexchange.com/questions/61037/how-to-resize-application-windows-in-an-arbitrary-direction-not-vertical-and-no
 // var windowId = exec("xprop -display ':0' -root | grep ^_NET_ACTIVE_WINDOW | cut --delimiter ' ' --fields 5"),
@@ -64,8 +88,6 @@ resizeActiveTo({
 //     windowHeight = exec("xwininfo -id " + windowId + " | grep Height | cut --delimiter ' ' --fields 4"),
 //     windowLeft = exec("xwininfo -id " + windowId + " | grep 'Absolute upper-left X' | cut --delimiter ' ' --fields 7");
 //     windowTop = exec("xwininfo -id " + windowId + " | grep 'Absolute upper-left Y' | cut --delimiter ' ' --fields 7");
-
-// // TODO: Calculate the rightmost/leftmost/topmost/bottommost desktops
 
 // // TODO: Calculate relative desktops (left, right, top, bottom) desktop
 
