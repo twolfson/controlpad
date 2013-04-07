@@ -208,8 +208,8 @@ var halfWidth = display.width / 2,
       center: {
         width: halfWidth,
         height: halfHeight,
-        top: eighthHeight,
-        left: eighthWidth
+        top: display.top + eighthHeight,
+        left: display.left + eighthWidth
       }
     };
 
