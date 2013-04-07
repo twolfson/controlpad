@@ -59,17 +59,29 @@ function resizeActiveTo(dimensions) {
   exec("wmctrl -r :ACTIVE: -e 0," + dimensions.left + "," + dimensions.top + "," + dimensions.width + "," + dimensions.height);
 }
 
-// DEV: Resize active window to right half of first display
-// var firstDisplay = displays[0];
-// resizeActiveTo({
-//   width: firstDisplay.width / 2,
-//   height: firstDisplay.height,
-//   left: firstDisplay.left + firstDisplay.width / 2,
-//   top: firstDisplay.top
-// });
+// Get active window and window info
+// http://unix.stackexchange.com/questions/61037/how-to-resize-application-windows-in-an-arbitrary-direction-not-vertical-and-no
+var windowId = exec("xprop -display ':0' -root | grep ^_NET_ACTIVE_WINDOW | cut --delimiter ' ' --fields 5"),
+    windowWidth = exec("xwininfo -id " + windowId + " | grep Width | cut --delimiter ' ' --fields 4"),
+    windowHeight = exec("xwininfo -id " + windowId + " | grep Height | cut --delimiter ' ' --fields 4"),
+    windowLeft = exec("xwininfo -id " + windowId + " | grep 'Absolute upper-left X' | cut --delimiter ' ' --fields 7");
+    windowTop = exec("xwininfo -id " + windowId + " | grep 'Absolute upper-left Y' | cut --delimiter ' ' --fields 7");
 
-// TODO: Next step -- get single commands working (not worrying about chaining stack)
-// e.g. controlpad rightmost right-half
+// Determine where the top-left corner of window is
+var currentDisplay = displays[0],
+    i = 0,
+    len = displays.length;
+for (; i < len; i++) {
+  var _display = displays[i],
+      isWithinHoriz = (_display.left <= windowLeft && (_display.left + _display.width) >= windowLeft),
+      isWithinVert = (_display.top <= windowTop && (_display.top + _display.height) >= windowTop);
+
+  // If the window is within the display horiz and vert, save it and stop searching
+  if (isWithinHoriz && isWithinVert) {
+    currentDisplay = _display;
+    break;
+  }
+}
 
 // Calculate the rightmost/leftmost/topmost/bottommost displays
 var semanticDisplays = {
@@ -88,11 +100,12 @@ var semanticDisplays = {
       bottommost: displays.reduce(function (a, b) {
         if (a.top >= b.top) { return a; }
         return b;
-      })
-      // TODO: Deal with current and relative =_=
+      }),
+      current: currentDisplay
+      // TODO: Deal with relative =_= -- fuck it. mark it as an issue.
     };
 
-
+// Find the requested display
 var displayName = process.argv[2],
     display = semanticDisplays[displayName];
 
@@ -112,6 +125,7 @@ if (!display) {
 var halfWidth = display.width / 2,
     halfHeight = display.height / 2,
     eighthWidth = halfWidth / 2,
+    eighthHeight = halfHeight / 2,
     semanticSizes = {
       'left-half': {
         width: halfWidth,
@@ -190,6 +204,12 @@ var halfWidth = display.width / 2,
         height: display.height,
         top: display.top,
         left: display.left
+      },
+      center: {
+        width: halfWidth,
+        height: halfHeight,
+        top: eighthHeight,
+        left: eighthWidth
       }
     };
 
@@ -231,9 +251,5 @@ resizeActiveTo(size);
 //     windowTop = exec("xwininfo -id " + windowId + " | grep 'Absolute upper-left Y' | cut --delimiter ' ' --fields 7");
 
 // // TODO: Calculate relative displays (left, right, top, bottom) display
-
-// // TODO: Calculate current display
-
-// TODO: Allow for same size (this allows for swapping displays)
 
 // // TODO: Get current state stack
