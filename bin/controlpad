@@ -10,11 +10,29 @@
 // cut -f2
 // DEV: Need to do `-d " "` for spaces o_O
 
-// Load in execSync
-var execSync = require('execSync'),
+// Load in modules
+var assert = require('assert'),
+    execSync = require('execSync'),
     exec = function (cmd) {
       return execSync.stdout(cmd).trim();
     };
+
+function showHelp() {
+  console.log('controlpad - WindowPad functionality for Linux');
+  console.log('Usage: controlpad {{display}} {{size}}');
+  console.log('    display - Display to move window to');
+  console.log('        - leftmost, rightmost, topmost, bottommost - Absolute displays');
+  console.log('        - left, right, top, bottom - Relative to current display');
+  console.log('        - current - Keep window on same display');
+  console.log('    size - Size to adjust window to');
+  console.log('        - left-half, right-half, top-half, bottom-half - Half displays');
+  console.log('        - top-left-quarter, top-right-quarter, bottom-left-quarter, bottom-right-quarter - Quarter displays');
+  console.log('        - top-left-eighth, top-right-eighth, bottom-left-eighth, bottom-right-eighth - Eighth displays');
+  console.log('        - full - Take up entire screen (not maximized)');
+  console.log('        - center - Center window in display (sized to half-by-half)');
+  console.log('        - same - Keep window on same size');
+  console.log('        - scale - Scale window size relative to display');
+}
 
 // Grab display sizings/offsets
 // DISPLAYS_STR=$(xrandr | grep ' connected ' | cut --fields=3 --delimiter ' ')
@@ -69,8 +87,18 @@ var semanticDisplays = {
       })
       // TODO: Deal with current and relative =_=
     };
-console.log(semanticDisplays);
 
+
+var displayName = process.argv[2],
+    sizing = process.argv[3];
+
+// Assert we have a displayName and sizing
+if (!displayName) { console.error('You must specify a "display"'); }
+if (!sizing) { console.error('You must specify a "size"'); }
+if (!displayName || !sizing) {
+  showHelp();
+  process.exit(1);
+}
 
 // // DEV: Temporary stand in
 // function grep(content, pattern) {
