@@ -90,14 +90,79 @@ var semanticDisplays = {
 
 
 var displayName = process.argv[2],
-    sizing = process.argv[3];
+    display = semanticDisplays[displayName];
 
-// Assert we have a displayName and sizing
-if (!displayName) { console.error('You must specify a "display"'); }
-if (!sizing) { console.error('You must specify a "size"'); }
-if (!displayName || !sizing) {
+// Assert we have a valid display
+if (!displayName) {
+  console.error('You must specify a "display"');
+} else if (!display) {
+  console.error('"' + displayName + '" is not a valid display');
+}
+
+if (!display) {
   showHelp();
   process.exit(1);
+}
+
+// Create sizes based off of the display
+var semanticSizes = {
+      'left-half': {
+        width: display.width / 2,
+        height: display.height,
+        top: display.top,
+        left: display.left
+      },
+      'right-half': {
+        width: display.width / 2,
+        height: display.height,
+        top: display.top,
+        left: display.left + display.width / 2
+      },
+      'top-half': {
+        width: display.width,
+        height: display.height / 2,
+        top: display.top,
+        left: display.left
+      },
+      'bottom-half': {
+        width: display.width,
+        height: display.height / 2,
+        top: display.top + display.height / 2,
+        left: display.left
+      },
+      'top-left-quarter': {
+        width: display.width / 2,
+        height: display.height / 2,
+        top: display.top,
+        left: display.left
+      },
+      'top-right-quarter': {
+        width: display.width / 2,
+        height: display.height / 2,
+        top: display.top,
+        left: display.left + display.width / 2
+      },
+      'bottom-left-quarter': {
+        width: display.width / 2,
+        height: display.height / 2,
+        top: display.top,
+        left: display.left
+      },
+      'bottom-right-quarter': {
+        width: display.width / 2,
+        height: display.height / 2,
+        top: display.top,
+        left: display.left + display.width / 2
+      },
+    };
+
+// Grab the requested size
+var sizeName = process.argv[3];
+
+// Assert we have a valid size
+if (!sizeName) {
+  console.error('You must specify a "size"');
+  isInvalid = true;
 }
 
 // // DEV: Temporary stand in
