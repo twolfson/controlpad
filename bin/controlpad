@@ -16,18 +16,18 @@ var execSync = require('execSync'),
       return execSync.stdout(cmd).trim();
     };
 
-// Grab desktop sizings/offsets
-// DESKTOPS_STR=$(xrandr | grep ' connected ' | cut --fields=3 --delimiter ' ')
-var desktopsStr = exec("xrandr | grep ' connected ' | cut --fields=3 --delimiter ' '"),
-    desktopsArr = desktopsStr.split(/\n/g),
-    desktops = desktopsArr.map(function interpretDesktop (desktopStr) {
+// Grab display sizings/offsets
+// DISPLAYS_STR=$(xrandr | grep ' connected ' | cut --fields=3 --delimiter ' ')
+var displaysStr = exec("xrandr | grep ' connected ' | cut --fields=3 --delimiter ' '"),
+    displaysArr = displaysStr.split(/\n/g),
+    displays = displaysArr.map(function interpretdisplay (displayStr) {
       // DEV: This is a bash-like implementation -- normally, we would use .match(/.../g), or `extract-values` module
-      var desktopDimensions = desktopStr.replace(/x/g, ' ').replace(/\+/g, ' ').split(' ');
+      var displayDimensions = displayStr.replace(/x/g, ' ').replace(/\+/g, ' ').split(' ');
       return {
-        width: +desktopDimensions[0],
-        height: +desktopDimensions[1],
-        left: +desktopDimensions[2],
-        top: +desktopDimensions[3]
+        width: +displayDimensions[0],
+        height: +displayDimensions[1],
+        left: +displayDimensions[2],
+        top: +displayDimensions[3]
       };
     });
 
@@ -37,39 +37,40 @@ function resizeActiveTo(dimensions) {
   exec("wmctrl -r :ACTIVE: -e 0," + dimensions.left + "," + dimensions.top + "," + dimensions.width + "," + dimensions.height);
 }
 
-// DEV: Resize active window to right half of first desktop
-// var firstDesktop = desktops[0];
+// DEV: Resize active window to right half of first display
+// var firstDisplay = displays[0];
 // resizeActiveTo({
-//   width: firstDesktop.width / 2,
-//   height: firstDesktop.height,
-//   left: firstDesktop.left + firstDesktop.width / 2,
-//   top: firstDesktop.top
+//   width: firstDisplay.width / 2,
+//   height: firstDisplay.height,
+//   left: firstDisplay.left + firstDisplay.width / 2,
+//   top: firstDisplay.top
 // });
 
 // TODO: Next step -- get single commands working (not worrying about chaining stack)
 // e.g. controlpad rightmost right-half
 
-// Calculate the rightmost/leftmost/topmost/bottommost desktops
-var semanticDesktops = {
-      leftmost: desktops.reduce(function (a, b) {
+// Calculate the rightmost/leftmost/topmost/bottommost displays
+var semanticDisplays = {
+      leftmost: displays.reduce(function (a, b) {
         if (a.left <= b.left) { return a; }
         return b;
       }),
-      rightmost: desktops.reduce(function (a, b) {
+      rightmost: displays.reduce(function (a, b) {
         if (a.left >= b.left) { return a;}
         return b;
       }),
-      topmost: desktops.reduce(function (a, b) {
+      topmost: displays.reduce(function (a, b) {
         if (a.top <= b.top) { return a; }
         return b;
       }),
-      bottommost: desktops.reduce(function (a, b) {
+      bottommost: displays.reduce(function (a, b) {
         if (a.top >= b.top) { return a; }
         return b;
       })
       // TODO: Deal with current and relative =_=
     };
-console.log(semanticDesktops.leftmost);
+console.log(semanticDisplays);
+
 
 // // DEV: Temporary stand in
 // function grep(content, pattern) {
@@ -80,7 +81,7 @@ console.log(semanticDesktops.leftmost);
 //   return matchedLines[0];
 // }
 
-// // TODO: Get current window and its position (if not exclusively on a desktop, use the top/left corner as the de-facto -- we could use other metrics like % of window on desktop but that overcomplicates things and is not practical)
+// // TODO: Get current window and its position (if not exclusively on a display, use the top/left corner as the de-facto -- we could use other metrics like % of window on display but that overcomplicates things and is not practical)
 // // Get active window and window info
 // // http://unix.stackexchange.com/questions/61037/how-to-resize-application-windows-in-an-arbitrary-direction-not-vertical-and-no
 // var windowId = exec("xprop -display ':0' -root | grep ^_NET_ACTIVE_WINDOW | cut --delimiter ' ' --fields 5"),
@@ -89,8 +90,10 @@ console.log(semanticDesktops.leftmost);
 //     windowLeft = exec("xwininfo -id " + windowId + " | grep 'Absolute upper-left X' | cut --delimiter ' ' --fields 7");
 //     windowTop = exec("xwininfo -id " + windowId + " | grep 'Absolute upper-left Y' | cut --delimiter ' ' --fields 7");
 
-// // TODO: Calculate relative desktops (left, right, top, bottom) desktop
+// // TODO: Calculate relative displays (left, right, top, bottom) display
 
-// // TODO: Calculate current desktop
+// // TODO: Calculate current display
+
+// TODO: Allow for same size (this allows for swapping displays)
 
 // // TODO: Get current state stack
