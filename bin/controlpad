@@ -204,6 +204,8 @@ if (!size) {
   process.exit(1);
 }
 
+// Resize our active window to the display/size
+resizeActiveTo(size);
 
 // // DEV: Temporary stand in
 // function grep(content, pattern) {
