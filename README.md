@@ -30,10 +30,33 @@ controlpad rightmost top-half
 ```
 
 ## Documentation
-_(Coming soon)_
+`controlpad` presents a large set of semantic configurations for resizing/relocating the active window.
+
+```shell
+controlpad - WindowPad functionality for Linux
+Usage: controlpad {{display}} {{size}}
+    display - Display to move window to
+        - leftmost, rightmost, topmost, bottommost - Absolute displays
+        - current - Keep window on same display
+    size - Size to adjust window to
+        - left-half, right-half, top-half, bottom-half - Half displays
+        - top-left-quarter, top-right-quarter, bottom-left-quarter, bottom-right-quarter - Quarter displays
+        - top-left-eighth, top-right-eighth, bottom-left-eighth, bottom-right-eighth - Eighth displays
+        - full - Take up entire screen (not maximized)
+        - center - Center window in display (sized to half-by-half)
+```
 
 ## Examples
-_(Coming soon)_
+```shell
+# Resize active window to center of screen
+controlpad current center
+
+# Move window to rightmost display
+controlpad rightmost center
+
+# Move window to left half of current display
+controlpad current left-half
+```
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style.
