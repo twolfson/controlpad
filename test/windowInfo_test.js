@@ -56,7 +56,7 @@ describe('windowInfo', function () {
     });
   });
 
-  describe.only('getting info about a maximized window', function () {
+  describe('getting info about a maximized window', function () {
     before(function (done) {
       exec('wmctrl -r "' + COMMON_NAME + '" -e 0,2000,0,500,400', done);
     });
@@ -66,12 +66,18 @@ describe('windowInfo', function () {
     before(function (done) {
       exec('wmctrl -r "' + COMMON_NAME + '" -b add,maximized_horz', done);
     });
-    // after(function (done) {
-    //   exec('wmctrl -r "' + COMMON_NAME + '" -b remove,maximized_vert', done);
-    // });
-    // after(function (done) {
-    //   exec('wmctrl -r "' + COMMON_NAME + '" -b remove,maximized_horz', done);
-    // });
+    before(function (done) {
+      setTimeout(done, 1000);
+    });
+    after(function (done) {
+      exec('wmctrl -r "' + COMMON_NAME + '" -b remove,maximized_vert', done);
+    });
+    after(function (done) {
+      exec('wmctrl -r "' + COMMON_NAME + '" -b remove,maximized_horz', done);
+    });
+    after(function (done) {
+      setTimeout(done, 1000);
+    });
 
     // Grab the window dimentsions
     before(function () {
@@ -82,10 +88,10 @@ describe('windowInfo', function () {
       console.log(this.win);
       expect(this.win).to.deep.equal({
         // DEV: wmctrl resizes left +3 and top +24 so we calculate proper height and such including border
-        left: 2800,
-        top: 30,
-        width: 1003,
-        height: 924
+        left: 1920,
+        top: 0,
+        width: 1920,
+        height: 1079
       });
     });
 
