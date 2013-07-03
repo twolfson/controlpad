@@ -88,7 +88,7 @@ if (!size) {
 }
 
 // Resize our active window to the display/size
-require('../lib/resizeWindowTo')(windowId, size);
+require('../lib/resizeWindowTo')(':ACTIVE:', size);
 
 // TODO: Calculate relative displays (left, right, top, bottom) display
 
