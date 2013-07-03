@@ -1,4 +1,4 @@
-# controlpad
+# controlpad [![Donate on Gittip](http://badgr.co/gittip/twolfson.png)](https://www.gittip.com/twolfson/)
 
 WindowPad functionality for Linux.
 
