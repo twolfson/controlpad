@@ -21,10 +21,8 @@ describe('windowInfo', function () {
 
   it('returns proper window size', function () {
     expect(this.win).to.deep.equal({
-      // TODO: Left from wmctrl is +3 consistently
-      left: 2803,
-      // TODO: Top from wmctrl is +24 consistently
-      top: 54,
+      left: 2800,
+      top: 30,
       width: 1000,
       height: 900
     });

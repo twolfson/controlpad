@@ -50,22 +50,6 @@ function resizeActiveTo(dimensions) {
 // http://unix.stackexchange.com/questions/61037/how-to-resize-application-windows-in-an-arbitrary-direction-not-vertical-and-no
 var windowId = exec("xprop -display ':0' -root | grep ^_NET_ACTIVE_WINDOW | cut --delimiter ' ' --fields 5");
 
-// Determine where the top-left corner of window is
-var currentDisplay = displays[0],
-    i = 0,
-    len = displays.length;
-for (; i < len; i++) {
-  var _display = displays[i],
-      isWithinHoriz = (_display.left <= windowLeft && (_display.left + _display.width) >= windowLeft),
-      isWithinVert = (_display.top <= windowTop && (_display.top + _display.height) >= windowTop);
-
-  // If the window is within the display horiz and vert, save it and stop searching
-  if (isWithinHoriz && isWithinVert) {
-    currentDisplay = _display;
-    break;
-  }
-}
-
 // Calculate the rightmost/leftmost/topmost/bottommost displays
 var semanticDisplays = {
       leftmost: displays.reduce(function (a, b) {
