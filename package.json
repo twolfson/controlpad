@@ -34,7 +34,9 @@
   "dependencies": {
     "execSync": "0.0.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "~1.7.2"
+  },
   "keywords": [
     "wmctrl",
     "control",
