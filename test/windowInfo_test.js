@@ -6,7 +6,6 @@ var windowInfo = require('../lib/windowInfo'),
 // Set up test global
 var WINDOW_ID = '0x01600093',
     COMMON_NAME = exec('wmctrl -l | grep ' + WINDOW_ID + ' | cut --delimiter " " --fields 5');
-console.log(COMMON_NAME);
 describe('windowInfo', function () {
   // Before anything, resize the window
   before(function () {
@@ -21,7 +20,6 @@ describe('windowInfo', function () {
   });
 
   it('returns proper window size', function () {
-    console.log(this.win);
     expect(this.win).to.deep.equal({
       // TODO: Left from wmctrl is +3 consistently
       left: 2803,
