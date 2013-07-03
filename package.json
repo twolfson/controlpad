@@ -28,7 +28,9 @@
     "controlpad": "bin/controlpad"
   },
   "main": "bin/controlpad",
-  "scripts": {},
+  "scripts": {
+    "test": "mocha"
+  },
   "dependencies": {
     "execSync": "0.0.3"
   },
@@ -38,6 +40,7 @@
     "control",
     "window",
     "display",
-    "linux"
+    "linux",
+    "x11"
   ]
 }
