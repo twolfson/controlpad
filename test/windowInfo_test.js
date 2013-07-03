@@ -5,13 +5,13 @@ var windowInfo = require('../lib/windowInfo'),
 
 // Set up test global
 var WINDOW_ID = '0x01600093',
-    COMMON_NAME = exec('wmctrl -l | grep ' + WINDOW_ID + ' | cut --delimiter " " --fields 5');
+    COMMON_NAME = exec('wmctrl -l | grep ' + WINDOW_ID + ' | cut --delimiter " " --fields 5-');
 describe('windowInfo', function () {
   // Before anything, resize the window
   before(function () {
     // Sorry, tests are designed for 1920 x 1080 (x2) setup
     // Left, top, width, height
-    exec('wmctrl -r ' + COMMON_NAME + ' -e 0,2800,30,1000,900');
+    exec('wmctrl -r "' + COMMON_NAME + '" -e 0,2800,30,1000,900');
   });
 
   // Grab the window dimentsions

@@ -34,18 +34,6 @@ function showHelp() {
 }
 
 
-// TODO: This will become wmpush eventually
-// TODO: Deal with being unable to unsize side-bound windows
-function resizeActiveTo(dimensions) {
-  // Remove any fullscreen junk
-  // http://movingtofreedom.org/2010/08/10/arranging-windows-from-the-gnulinux-command-line-with-wmctrl/
-  exec("wmctrl -r :ACTIVE: -b remove,maximized_vert");
-  exec("wmctrl -r :ACTIVE: -b remove,maximized_horz");
-
-  // gravity, left, top, width, height
-  exec("wmctrl -r :ACTIVE: -e 0," + dimensions.left + "," + dimensions.top + "," + dimensions.width + "," + dimensions.height);
-}
-
 // Get active window and window info
 // http://unix.stackexchange.com/questions/61037/how-to-resize-application-windows-in-an-arbitrary-direction-not-vertical-and-no
 var windowId = exec("xprop -display ':0' -root | grep ^_NET_ACTIVE_WINDOW | cut --delimiter ' ' --fields 5");
@@ -67,8 +55,6 @@ if (!display) {
   showHelp();
   process.exit(1);
 }
-
-
 
 // Grab the requested size
 var sizeName = process.argv[3],
