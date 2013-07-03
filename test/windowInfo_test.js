@@ -1,32 +1,33 @@
 // Load in dependencies
-var windowInfo = require('../lib/windowInfo'),
-    exec = require('../lib/utils').exec,
+var getWindowDisplay = require('../lib/getWindowDisplay'),
     expect = require('chai').expect;
 
-// Set up test global
-var WINDOW_ID = '0x01600093',
-    COMMON_NAME = exec('wmctrl -l | grep ' + WINDOW_ID + ' | cut --delimiter " " --fields 5');
-describe('windowInfo', function () {
-  // Before anything, resize the window
+describe('getWindowDisplay', function () {
   before(function () {
-    // Sorry, tests are designed for 1920 x 1080 (x2) setup
-    // Left, top, width, height
-    exec('wmctrl -r ' + COMMON_NAME + ' -e 0,2800,30,1000,900');
-  });
-
-  // Grab the window dimentsions
-  before(function () {
-    this.win = windowInfo(WINDOW_ID);
-  });
-
-  it('returns proper window size', function () {
-    expect(this.win).to.deep.equal({
-      // TODO: wmctrl resizes left +3 and top +24
-      // TODO: windowInfo should be returning proper top/left with adjusted width/height
+    this.display = getWindowDisplay({
       left: 2803,
       top: 54,
       width: 1000,
       height: 900
+    }, [{
+      top: 0,
+      left: 0,
+      width: 1920,
+      height: 1080
+    }, {
+      top: 0,
+      left: 1920,
+      width: 1920,
+      height: 1080
+    }]);
+  });
+
+  it('returns proper window size', function () {
+    expect(this.display).to.deep.equal({
+      top: 0,
+      left: 1920,
+      width: 1920,
+      height: 1080
     });
   });
 });
