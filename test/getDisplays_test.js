@@ -8,7 +8,6 @@ describe('getDisplays', function () {
 
   it('returns proper monitor sizes', function () {
     // Sorry, tests are designed for 1920 x 1080 (x2) setup
-    console.log(this.displays);
     expect(this.displays).to.deep.equal([{
       top: 0,
       left: 0,

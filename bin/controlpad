@@ -48,11 +48,7 @@ function resizeActiveTo(dimensions) {
 
 // Get active window and window info
 // http://unix.stackexchange.com/questions/61037/how-to-resize-application-windows-in-an-arbitrary-direction-not-vertical-and-no
-var windowId = exec("xprop -display ':0' -root | grep ^_NET_ACTIVE_WINDOW | cut --delimiter ' ' --fields 5"),
-    windowWidth = exec("xwininfo -id " + windowId + " | grep Width | cut --delimiter ' ' --fields 4"),
-    windowHeight = exec("xwininfo -id " + windowId + " | grep Height | cut --delimiter ' ' --fields 4"),
-    windowLeft = exec("xwininfo -id " + windowId + " | grep 'Absolute upper-left X' | cut --delimiter ' ' --fields 7");
-    windowTop = exec("xwininfo -id " + windowId + " | grep 'Absolute upper-left Y' | cut --delimiter ' ' --fields 7");
+var windowId = exec("xprop -display ':0' -root | grep ^_NET_ACTIVE_WINDOW | cut --delimiter ' ' --fields 5");
 
 // Determine where the top-left corner of window is
 var currentDisplay = displays[0],
