@@ -20,7 +20,6 @@ describe('resizeWindowTo', function () {
 
     it('is successful in its resize', function () {
       var info = windowInfo(WINDOW_ID);
-      console.log(info);
       expect(info).to.deep.equal({
         top: 20,
         left: 2900,

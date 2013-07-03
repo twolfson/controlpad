@@ -33,12 +33,26 @@ function showHelp() {
   // console.log('        - scale - Scale window size relative to display');
 }
 
+// TODO: Move everything into a class and constructor
+/*
+var window = new Controlpad(), // defaults to active window via class method
+    displays = Controlpad.getDisplays(),
+    windowId = window.id;
+
+window.resizeTo({top, left, width, height});
+*/
+
+// Grab display sizings/offsets
+var displays = require('../lib/getDisplays')();
 
 // Get active window and window info
 // http://unix.stackexchange.com/questions/61037/how-to-resize-application-windows-in-an-arbitrary-direction-not-vertical-and-no
-var windowId = exec("xprop -display ':0' -root | grep ^_NET_ACTIVE_WINDOW | cut --delimiter ' ' --fields 5");
+var windowId = exec("xprop -display ':0' -root | grep ^_NET_ACTIVE_WINDOW | cut --delimiter ' ' --fields 5"),
+    windowInfo = require('../lib/windowInfo')(windowId);
 
 // TODO: Deal with relative =_= -- fuck it. mark it as an issue.
+var semanticDisplays = require('../lib/semanticDisplays')(displays);
+semanticDisplays.current = require('../lib/getWindowDisplay')(windowInfo, displays);
 
 // Find the requested display
 var displayName = process.argv[2],
@@ -58,6 +72,7 @@ if (!display) {
 
 // Grab the requested size
 var sizeName = process.argv[3],
+    semanticSizes = require('../lib/getSizes')(display),
     size = semanticSizes[sizeName];
 
 // Assert we have a valid size
@@ -73,7 +88,7 @@ if (!size) {
 }
 
 // Resize our active window to the display/size
-resizeActiveTo(size);
+require('../lib/resizeWindowTo')(windowId, size);
 
 // TODO: Calculate relative displays (left, right, top, bottom) display
 

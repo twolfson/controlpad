@@ -69,6 +69,8 @@ describe('windowInfo', function () {
     before(function (done) {
       exec('wmctrl -r "' + COMMON_NAME + '" -b add,maximized_horz', done);
     });
+    // TODO: We have race conditions here. They are prob being caused by `utils.execSync`.
+    // TODO: To properly fix this, we need to move everything to async ;_;
     before(function (done) {
       setTimeout(done, 100);
     });
