@@ -88,7 +88,6 @@ describe('windowInfo', function () {
     });
 
     it('returns proper window size', function () {
-      console.log(this.win);
       expect(this.win).to.deep.equal({
         // DEV: wmctrl resizes left +3 and top +24 so we calculate proper height and such including border
         left: 1920,
