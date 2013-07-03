@@ -7,7 +7,7 @@ var resizeWindowTo = require('../lib/resizeWindowTo'),
 // Set up test global
 var WINDOW_ID = '0x01600093',
     COMMON_NAME = exec('wmctrl -l | grep ' + WINDOW_ID + ' | cut --delimiter " " --fields 5-');
-describe.only('resizeWindowTo', function () {
+describe.skip('resizeWindowTo', function () {
   describe('resizing a window', function () {
     before(function () {
       resizeWindowTo(COMMON_NAME, {
