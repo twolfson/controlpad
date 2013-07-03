@@ -50,27 +50,7 @@ function resizeActiveTo(dimensions) {
 // http://unix.stackexchange.com/questions/61037/how-to-resize-application-windows-in-an-arbitrary-direction-not-vertical-and-no
 var windowId = exec("xprop -display ':0' -root | grep ^_NET_ACTIVE_WINDOW | cut --delimiter ' ' --fields 5");
 
-// Calculate the rightmost/leftmost/topmost/bottommost displays
-var semanticDisplays = {
-      leftmost: displays.reduce(function (a, b) {
-        if (a.left <= b.left) { return a; }
-        return b;
-      }),
-      rightmost: displays.reduce(function (a, b) {
-        if (a.left >= b.left) { return a;}
-        return b;
-      }),
-      topmost: displays.reduce(function (a, b) {
-        if (a.top <= b.top) { return a; }
-        return b;
-      }),
-      bottommost: displays.reduce(function (a, b) {
-        if (a.top >= b.top) { return a; }
-        return b;
-      }),
-      current: currentDisplay
-      // TODO: Deal with relative =_= -- fuck it. mark it as an issue.
-    };
+// TODO: Deal with relative =_= -- fuck it. mark it as an issue.
 
 // Find the requested display
 var displayName = process.argv[2],
