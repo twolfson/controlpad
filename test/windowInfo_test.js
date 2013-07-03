@@ -11,6 +11,9 @@ describe('windowInfo', function () {
   describe('getting info about a window at 0,0', function () {
     // Before anything, resize the window
     before(function (done) {
+      setTimeout(done, 100);
+    });
+    before(function (done) {
       // Sorry, tests are designed for 1920 x 1080 (x2) setup
       // left, top, width, height
       exec('wmctrl -r "' + COMMON_NAME + '" -e 0,0,0,1000,900', done);
@@ -67,7 +70,7 @@ describe('windowInfo', function () {
       exec('wmctrl -r "' + COMMON_NAME + '" -b add,maximized_horz', done);
     });
     before(function (done) {
-      setTimeout(done, 1000);
+      setTimeout(done, 100);
     });
     after(function (done) {
       exec('wmctrl -r "' + COMMON_NAME + '" -b remove,maximized_vert', done);
