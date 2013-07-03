@@ -88,6 +88,7 @@ if (!size) {
 }
 
 // Resize our active window to the display/size
+// DEV: We cannot use title sniffing here since 'Terminal's have the same title =(
 require('../lib/resizeWindowTo')(':ACTIVE:', size);
 
 // TODO: Calculate relative displays (left, right, top, bottom) display
