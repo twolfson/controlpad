@@ -68,6 +68,7 @@ SCRIPT
   # sudo apt-get install x11-xserver-utils
 
   # Attempting to build Xvfb but finding documentation sucks
+  # http://www.x.org/wiki/DeveloperStart/
   # http://stackoverflow.com/questions/14845291/compile-static-linked-binary-of-xvfb
 
   # Verify environment is properly configured
