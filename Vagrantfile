@@ -48,6 +48,9 @@ SCRIPT
 
   # Trying out installing gnome-terminal to get a working window list
   # http://stackoverflow.com/questions/12252774/getting-window-list-in-xvfb-server#comment16435190_12252774
+  # Tried out gnome-terminal. Seems to be self-terminating
+  # Trying out gedit
+  # TODO: Try out x11 forwarding then wmctrl -l
 
   # Verify environment is properly configured
   $configure_env = <<SCRIPT
