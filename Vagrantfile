@@ -25,6 +25,14 @@ SCRIPT
 SCRIPT
   config.vm.provision "shell", inline: $install_node
 
+  # Install test dependencies
+  $install_test_dependencies = <<SCRIPT
+  if ! which wmctrl &> /dev/null; then
+    sudo apt-get install -y wmctrl
+  fi
+SCRIPT
+  config.vm.provision "shell", inline: $install_test_dependencies
+
   # Verify environment is properly configured
   $configure_env = <<SCRIPT
   if test "$VAGRANT" != "true"; then
