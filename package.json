@@ -27,7 +27,6 @@
   "bin": {
     "controlpad": "bin/controlpad"
   },
-  "main": "bin/controlpad",
   "scripts": {
     "test": "mocha"
   },
