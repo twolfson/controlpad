@@ -46,6 +46,9 @@ SCRIPT
 SCRIPT
   config.vm.provision "shell", inline: $launch_xvfb
 
+  # Trying out installing gnome-terminal to get a working window list
+  # http://stackoverflow.com/questions/12252774/getting-window-list-in-xvfb-server#comment16435190_12252774
+
   # Verify environment is properly configured
   $configure_env = <<SCRIPT
   if test "$VAGRANT" != "true"; then
