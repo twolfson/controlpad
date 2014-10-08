@@ -40,7 +40,7 @@ SCRIPT
     if ! grep DISPLAY /etc/environment > /dev/null; then
       echo "DISPLAY=$DISPLAY" >> /etc/environment
     fi
-
+    # TODO: Launch Xvfb from node for different screen configurations
     # Set up Xvfb
     /usr/bin/Xvfb $DISPLAY -screen 0 1024x768x24 &
 SCRIPT
@@ -67,6 +67,8 @@ SCRIPT
   # We were missing `xrandr` as well
   # sudo apt-get install x11-xserver-utils
 
+  # Attempting to build Xvfb but finding documentation sucks
+  # http://stackoverflow.com/questions/14845291/compile-static-linked-binary-of-xvfb
 
   # Verify environment is properly configured
   $configure_env = <<SCRIPT
