@@ -25,13 +25,13 @@ SCRIPT
 SCRIPT
   config.vm.provision "shell", inline: $install_node
 
-  # Install test dependencies
-  $install_test_dependencies = <<SCRIPT
+  # Install library dependencies
+  $install_dependencies = <<SCRIPT
   if ! which wmctrl &> /dev/null; then
-    sudo apt-get install -y wmctrl
+    sudo apt-get install -y wmctrl xvfb x11-utils
   fi
 SCRIPT
-  config.vm.provision "shell", inline: $install_test_dependencies
+  config.vm.provision "shell", inline: $install_dependencies
 
   # Verify environment is properly configured
   $configure_env = <<SCRIPT
