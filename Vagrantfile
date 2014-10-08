@@ -62,6 +62,8 @@ SCRIPT
   # trying out openbox
   # http://forum.xbmc.org/showthread.php?tid=50500
 
+  # It fucking works... finally... thanks openbox!
+
 
   # Verify environment is properly configured
   $configure_env = <<SCRIPT
