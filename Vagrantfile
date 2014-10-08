@@ -33,6 +33,19 @@ SCRIPT
 SCRIPT
   config.vm.provision "shell", inline: $install_dependencies
 
+  # Start up a fake X11 server
+  $launch_xvfb = <<SCRIPT
+    # Set and persist DISPLAY to :99.0
+    export DISPLAY=:99.0
+    if ! grep DISPLAY /etc/environment > /dev/null; then
+      echo "DISPLAY=$DISPLAY" >> /etc/environment
+    fi
+
+    # Set up Xvfb
+    /usr/bin/Xvfb $DISPLAY -screen 0 1024x768x24 &
+SCRIPT
+  config.vm.provision "shell", inline: $launch_xvfb
+
   # Verify environment is properly configured
   $configure_env = <<SCRIPT
   if test "$VAGRANT" != "true"; then
