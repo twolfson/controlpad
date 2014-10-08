@@ -1,7 +1,7 @@
 {
   "name": "wmctrl-pad",
   "description": "WindowPad functionality for Linux",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "homepage": "https://github.com/twolfson/controlpad",
   "author": {
     "name": "Todd Wolfson",
@@ -18,16 +18,15 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/twolfson/grunt-zip/blob/master/LICENSE-MIT"
+      "url": "https://github.com/twolfson/controlpad/blob/master/LICENSE-MIT"
     }
   ],
   "engines": {
-    "node": "*"
+    "node": ">=0.8.0"
   },
   "bin": {
     "controlpad": "bin/controlpad"
   },
-  "main": "bin/controlpad",
   "scripts": {
     "test": "mocha"
   },
