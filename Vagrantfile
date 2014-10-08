@@ -50,7 +50,18 @@ SCRIPT
   # http://stackoverflow.com/questions/12252774/getting-window-list-in-xvfb-server#comment16435190_12252774
   # Tried out gnome-terminal. Seems to be self-terminating
   # Trying out gedit
+  # gedit is starting but still same error
   # TODO: Try out x11 forwarding then wmctrl -l
+  # http://itg.chem.indiana.edu/inc/wiki/software/openssh/200.html
+  # vagrant ssh -- -X
+  # sudo apt-get install x11-apps
+  # wmctrl -l # works under x11 forwarding and lists host machine info
+  # xclock seems to be in list too
+  # much smaller alternative to gedit/gnome-terminal
+  # but still no list without x11 forwarding
+  # trying out openbox
+  # http://forum.xbmc.org/showthread.php?tid=50500
+
 
   # Verify environment is properly configured
   $configure_env = <<SCRIPT
