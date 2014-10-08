@@ -6,30 +6,18 @@ describe.only('getDisplays', function () {
     this.displays = getDisplays();
   });
 
-  it('returns accurate monitor size', function () {
+  it('returns accurate monitor sizes', function () {
+    console.log(this.displays);
     expect(this.displays).to.deep.equal([{
       top: 0,
       left: 0,
       width: 1920,
       height: 1080
+    }, {
+      top: 0,
+      left: 1920,
+      width: 1920,
+      height: 1080
     }]);
-  });
-
-  describe.skip('on 2 monitors', function () {
-    // TODO: Add mock
-
-    it('returns accurate monitor sizes', function () {
-      expect(this.displays).to.deep.equal([{
-        top: 0,
-        left: 0,
-        width: 1920,
-        height: 1080
-      }, {
-        top: 0,
-        left: 1920,
-        width: 1920,
-        height: 1080
-      }]);
-    });
   });
 });

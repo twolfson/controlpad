@@ -64,6 +64,9 @@ SCRIPT
 
   # It fucking works... finally... thanks openbox!
 
+  # We were missing `xrandr` as well
+  # sudo apt-get install x11-xserver-utils
+
 
   # Verify environment is properly configured
   $configure_env = <<SCRIPT
