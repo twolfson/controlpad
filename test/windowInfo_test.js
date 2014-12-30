@@ -37,7 +37,7 @@ describe('windowInfo', function () {
     delete this.commonName;
   });
 
-  describe.only('getting info about a window at 0,0', function () {
+  describe('getting info about a window at 0,0', function () {
     // Before anything, resize the window
     before(function (done) {
       console.log('zzzzz');
