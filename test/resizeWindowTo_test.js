@@ -9,12 +9,15 @@ var WINDOW_ID = '0x01600093';
 describe.skip('resizeWindowTo', function () {
   before(function setupName (done) {
     // TODO: Use shell-quote
+    var that = this;
     exec('wmctrl -l | grep ' + WINDOW_ID + ' | cut --delimiter " " --fields 5-', function handleName (err, name) {
       that.commonName = name;
       done(err);
     });
   });
-
+  after(function cleanup () {
+    delete this.commonName;
+  });
 
   describe('resizing a window', function () {
     before(function () {

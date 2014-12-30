@@ -1,13 +1,39 @@
 // Load in dependencies
 var windowInfo = require('../lib/windowInfo'),
-    execSync = require('../lib/utils').exec,
     exec = require('child_process').exec,
     expect = require('chai').expect;
 
+// Define utility for getting window info
+var testUtils = {
+  getWindowInfo: function (windowId) {
+    before(function getWindowInfoFn (done) {
+      var that = this;
+      windowInfo(windowId, function handleInfo (err, _win) {
+        that.win = _win;
+        done(err);
+      });
+    });
+    after(function cleanup () {
+      delete this.win;
+    });
+  }
+};
+
 // Set up test global
-var WINDOW_ID = '0x01600093',
-    COMMON_NAME = execSync('wmctrl -l | grep ' + WINDOW_ID + ' | cut --delimiter " " --fields 5-');
+var WINDOW_ID = '0x01600093';
 describe('windowInfo', function () {
+  before(function setupName (done) {
+    // TODO: Use shell-quote
+    var that = this;
+    exec('wmctrl -l | grep ' + WINDOW_ID + ' | cut --delimiter " " --fields 5-', function handleName (err, name) {
+      that.commonName = name;
+      done(err);
+    });
+  });
+  after(function cleanup () {
+    delete this.commonName;
+  });
+
   describe('getting info about a window at 0,0', function () {
     // Before anything, resize the window
     before(function (done) {
@@ -16,13 +42,11 @@ describe('windowInfo', function () {
     before(function (done) {
       // Sorry, tests are designed for 1920 x 1080 (x2) setup
       // left, top, width, height
-      exec('wmctrl -r "' + COMMON_NAME + '" -e 0,0,0,1000,900', done);
+      exec('wmctrl -r "' + this.commonName + '" -e 0,0,0,1000,900', done);
     });
 
     // Grab the window dimentsions
-    before(function () {
-      this.win = windowInfo(WINDOW_ID);
-    });
+    testUtils.getWindowInfo(WINDOW_ID);
 
     it('returns proper window size', function () {
       expect(this.win).to.deep.equal({
@@ -40,13 +64,11 @@ describe('windowInfo', function () {
     before(function (done) {
       // Sorry, tests are designed for 1920 x 1080 (x2) setup
       // left, top, width, height
-      exec('wmctrl -r "' + COMMON_NAME + '" -e 0,2800,30,1000,900', done);
+      exec('wmctrl -r "' + this.commonName + '" -e 0,2800,30,1000,900', done);
     });
 
     // Grab the window dimentsions
-    before(function () {
-      this.win = windowInfo(WINDOW_ID);
-    });
+    testUtils.getWindowInfo(WINDOW_ID);
 
     it('returns proper window size', function () {
       expect(this.win).to.deep.equal({
@@ -61,13 +83,13 @@ describe('windowInfo', function () {
 
   describe('getting info about a maximized window', function () {
     before(function (done) {
-      exec('wmctrl -r "' + COMMON_NAME + '" -e 0,2000,0,500,400', done);
+      exec('wmctrl -r "' + this.commonName + '" -e 0,2000,0,500,400', done);
     });
     before(function (done) {
-      exec('wmctrl -r "' + COMMON_NAME + '" -b add,maximized_vert', done);
+      exec('wmctrl -r "' + this.commonName + '" -b add,maximized_vert', done);
     });
     before(function (done) {
-      exec('wmctrl -r "' + COMMON_NAME + '" -b add,maximized_horz', done);
+      exec('wmctrl -r "' + this.commonName + '" -b add,maximized_horz', done);
     });
     // TODO: We have race conditions here. They are prob being caused by `utils.execSync`.
     // TODO: To properly fix this, we need to move everything to async ;_;
@@ -75,19 +97,17 @@ describe('windowInfo', function () {
       setTimeout(done, 100);
     });
     after(function (done) {
-      exec('wmctrl -r "' + COMMON_NAME + '" -b remove,maximized_vert', done);
+      exec('wmctrl -r "' + this.commonName + '" -b remove,maximized_vert', done);
     });
     after(function (done) {
-      exec('wmctrl -r "' + COMMON_NAME + '" -b remove,maximized_horz', done);
+      exec('wmctrl -r "' + this.commonName + '" -b remove,maximized_horz', done);
     });
     after(function (done) {
       setTimeout(done, 1000);
     });
 
     // Grab the window dimentsions
-    before(function () {
-      this.win = windowInfo(WINDOW_ID);
-    });
+    testUtils.getWindowInfo(WINDOW_ID);
 
     it('returns proper window size', function () {
       expect(this.win).to.deep.equal({
