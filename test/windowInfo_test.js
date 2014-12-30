@@ -20,13 +20,16 @@ var testUtils = {
 };
 
 // Set up test global
-var WINDOW_ID = '0x01600093';
+// DEV: Find an id via `wmctrl -l` on any window
+var WINDOW_ID = '0x0360008a';
 describe('windowInfo', function () {
   before(function setupName (done) {
     // TODO: Use shell-quote
     var that = this;
+    console.log('huh');
     exec('wmctrl -l | grep ' + WINDOW_ID + ' | cut --delimiter " " --fields 5-', function handleName (err, name) {
-      that.commonName = name;
+      console.log('yo', err);
+      that.commonName = name.trim();
       done(err);
     });
   });
@@ -37,11 +40,13 @@ describe('windowInfo', function () {
   describe('getting info about a window at 0,0', function () {
     // Before anything, resize the window
     before(function (done) {
+      console.log('zzzzz');
       setTimeout(done, 100);
     });
     before(function (done) {
       // Sorry, tests are designed for 1920 x 1080 (x2) setup
       // left, top, width, height
+      console.log('wmctrl -r "' + this.commonName + '" -e 0,0,0,1000,900');
       exec('wmctrl -r "' + this.commonName + '" -e 0,0,0,1000,900', done);
     });
 
