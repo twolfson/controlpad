@@ -3,13 +3,16 @@ var getSizes = require('../lib/getSizes'),
     expect = require('chai').expect;
 
 describe('getSizes', function () {
-  before(function () {
+  before(function setupSizes () {
     this.sizes = getSizes({
       top: 0,
       left: 0,
       width: 1920,
       height: 1080
     });
+  });
+  after(function cleanup () {
+    delete this.sizes;
   });
 
   it('has the proper left-half display', function () {

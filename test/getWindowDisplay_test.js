@@ -22,6 +22,9 @@ describe('getWindowDisplay', function () {
         height: 1080
       }]);
     });
+    after(function () {
+      delete this.display;
+    });
 
     it('returns proper display', function () {
       expect(this.display).to.deep.equal({
@@ -51,6 +54,9 @@ describe('getWindowDisplay', function () {
         width: 1920,
         height: 1080
       }]);
+    });
+    after(function () {
+      delete this.display;
     });
 
     it('returns proper display', function () {
@@ -82,6 +88,9 @@ describe('getWindowDisplay', function () {
         height: 1080
       }]);
     });
+    after(function () {
+      delete this.display;
+    });
 
     it('returns proper display', function () {
       expect(this.display).to.deep.equal({
@@ -92,8 +101,6 @@ describe('getWindowDisplay', function () {
       });
     });
   });
-
-
 
   // TODO: Should do some tests against chrome
 });
