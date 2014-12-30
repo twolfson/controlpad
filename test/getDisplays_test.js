@@ -2,8 +2,15 @@ var getDisplays = require('../lib/getDisplays'),
     expect = require('chai').expect;
 
 describe('getDisplays', function () {
-  before(function () {
-    this.displays = getDisplays();
+  before(function saveDisplays (done) {
+    var that = this;
+    getDisplays(function handleDisplays (err, displays) {
+      that.displays = displays;
+      done(err);
+    });
+  });
+  after(function cleanup () {
+    delete this.displays;
   });
 
   it('returns proper monitor sizes', function () {
