@@ -1,4 +1,6 @@
 # wmctrl-pad changelog
+0.5.0 - Moved from using top-left corner of window to center
+
 0.4.0 - Fixed up handling of new `xrandr` output
 
 0.3.0 - Fixed up license, main, and node version in `package.json`
