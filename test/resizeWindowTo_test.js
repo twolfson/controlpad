@@ -1,13 +1,21 @@
 // Load in dependencies
 var resizeWindowTo = require('../lib/resizeWindowTo'),
     windowInfo = require('../lib/windowInfo'),
-    exec = require('../lib/utils').exec,
+    exec = require('child_process').exec,
     expect = require('chai').expect;
 
 // Set up test global
-var WINDOW_ID = '0x01600093',
-    COMMON_NAME = exec('wmctrl -l | grep ' + WINDOW_ID + ' | cut --delimiter " " --fields 5-');
-describe('resizeWindowTo', function () {
+var WINDOW_ID = '0x01600093';
+describe.skip('resizeWindowTo', function () {
+  before(function setupName (done) {
+    // TODO: Use shell-quote
+    exec('wmctrl -l | grep ' + WINDOW_ID + ' | cut --delimiter " " --fields 5-', function handleName (err, name) {
+      that.commonName = name;
+      done(err);
+    });
+  });
+
+
   describe('resizing a window', function () {
     before(function () {
       resizeWindowTo(COMMON_NAME, {
