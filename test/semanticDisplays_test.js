@@ -16,6 +16,9 @@ describe('semanticDisplays', function () {
       height: 1080
     }]);
   });
+  after(function () {
+    delete this.semanticDisplays;
+  });
 
   it('has the proper leftmost display', function () {
     expect(this.semanticDisplays.leftmost).to.deep.equal({
