@@ -47,7 +47,7 @@ var displays = require('../lib/getDisplays')();
 
 // Get active window and window info
 // http://unix.stackexchange.com/questions/61037/how-to-resize-application-windows-in-an-arbitrary-direction-not-vertical-and-no
-var windowId = exec("xprop -display ':0' -root | grep ^_NET_ACTIVE_WINDOW | cut --delimiter ' ' --fields 5"),
+var windowId = exec("xprop -display '" + process.env.DISPLAY + "' -root | grep ^_NET_ACTIVE_WINDOW | cut --delimiter ' ' --fields 5"),
     windowInfo = require('../lib/windowInfo')(windowId);
 
 // TODO: Deal with relative =_= -- fuck it. mark it as an issue.
