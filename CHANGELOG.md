@@ -1,4 +1,6 @@
 # wmctrl-pad changelog
+0.7.0 - Added support for `node>=4.0.0`
+
 0.6.0 - Added support for any display
 
 0.5.1 - Added foundry for release
