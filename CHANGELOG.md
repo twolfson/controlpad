@@ -1,4 +1,6 @@
 # wmctrl-pad changelog
+0.6.0 - Added support for any display
+
 0.5.1 - Added foundry for release
 
 0.5.0 - Moved from using top-left corner of window to center

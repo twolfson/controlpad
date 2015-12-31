@@ -1,7 +1,7 @@
 {
   "name": "wmctrl-pad",
   "description": "WindowPad functionality for Linux",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "homepage": "https://github.com/twolfson/controlpad",
   "author": {
     "name": "Todd Wolfson",
